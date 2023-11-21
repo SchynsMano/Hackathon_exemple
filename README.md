@@ -13,6 +13,8 @@ Faire => python app.py ou python3 app.py
 
 Pour lancer le front c'est a dire React,
 il faut aller dans le dossier "my-react-app" et 
+Faire => npm install
+Puis
 Faire => npm start
 
 Commentaires pour React :
