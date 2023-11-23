@@ -1,9 +1,9 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Navbar from './Navbar.js';
-import Acceuil from './Acceuil';
-import Connection from './Connection';
+import Navbar from './js/Navbar.js';
+import Acceuil from './js/Acceuil.js';
+import Connection from './js/Connection.js';
 
 const App = () => {
   return (

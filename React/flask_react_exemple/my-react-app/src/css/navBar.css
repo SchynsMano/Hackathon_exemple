@@ -1,0 +1,22 @@
+/* Styles pour la barre de navigation */
+.navbar {
+    background-color: #333; /* Couleur de fond */
+    overflow: hidden; /* Garantit que les éléments flottent correctement dans la barre de navigation */
+  }
+  
+  /* Style pour les liens dans la barre de navigation */
+  .navbar a {
+    float: left; /* Flottez les éléments à gauche pour les aligner horizontalement */
+    display: block; /* Assurez-vous que les liens occupent toute la largeur de la barre de navigation */
+    color: white; /* Couleur du texte */
+    text-align: center; /* Centrez le texte */
+    padding: 14px 16px; /* Ajoutez un espacement autour du texte */
+    text-decoration: none; /* Supprimez le soulignement du lien */
+  }
+  
+  /* Changez la couleur du lien au survol */
+  .navbar a:hover {
+    background-color: #ddd; /* Couleur de fond au survol */
+    color: black; /* Changez la couleur du texte au survol */
+  }
+  

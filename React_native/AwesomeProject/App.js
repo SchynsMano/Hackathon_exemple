@@ -10,37 +10,36 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Page1">
+    <Stack.Navigator initialRouteName="Page1"> 
       <Stack.Screen
-      name="Page1"
-      component={Page1}
-      options={{
-        title: 'Page premières',
-        headerStyle: {
-          backgroundColor: 'blue',
-        },
-        headerRight: () => (
-          <Button
-            onPress={() => alert('This is a button!')}
-            title="Info"
+        name="Page1"//nom pour accéder a la page
+        component={Page1} //composant a ajouter
+        options={{
+          title: 'Page premières', // titre de la page
+          headerStyle: { //style de la barre de navigation
+            backgroundColor: 'blue',
+          },
+          headerRight: () => (
+            <Button//ajoute un bouton a droite
+              onPress={() => alert('This is a button!')}//creer une boite de dialogue
+              title="Info"
+              titleStyle={{ color: 'blue' }}
+              buttonStyle={{ backgroundColor: 'white' }}
+            />
+          ),
            
-            titleStyle={{ color: 'blue' }} // Changer la couleur du texte du titre du bouton
-            buttonStyle={{ backgroundColor: 'white' }} // Changer la couleur de fond du bouton
-            
-          />
-        ),
-      }}
-    />
-        <Stack.Screen
-          name="Page2"
-          component={Page2}
-          //options={{
-            //headerLeft: null, // Retire le bouton de retour
-          //}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+        }}
+      />
+      <Stack.Screen
+        name="Page2"
+        component={Page2}
+        options={{
+          headerShown: false, // Retire la barre de navigation pour cet écran
+        }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
+  );  
 };
 
 export default App;
