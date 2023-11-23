@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Navbar from './Navbar.js';
+import Acceuil from './Acceuil';
+import Connection from './Connection';
 
-function App() {
-  const [data, setData] = useState('');
-
-  useEffect(() => {
-    // Appel de l'API Flask lors du chargement du composant
-    fetch('http://127.0.0.1:5000/api/data')
-      .then(response => response.json())
-      .then(data => setData(data.message))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>React + Flask Example</h1>
-        <p>Data from Flask: {data}</p>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Navbar/>
+        <Routes>
+          <Route path="/Connection" element={<Connection/>} />
+          <Route path="/" element={<Acceuil/>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
