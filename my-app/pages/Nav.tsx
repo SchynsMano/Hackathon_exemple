@@ -11,7 +11,6 @@ import {
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
-// import Multi from "./components/multi";
 import Inscription from "../pages/Inscription";
 import Connection from "../pages/Connection";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,13 +18,7 @@ import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
 import Create from "./Create";
-<<<<<<< HEAD
 import Multi from "../components/Multi";
-=======
-import Multi from "../components/multi";
-import Reglages from "./Reglages";
-import Geoguesser from "./Geoguesser";
->>>>>>> 80e6cd10ba71c81bb890730a17c6a53101cc8037
 import { BlurView } from "expo-blur";
 import Leaderboard from "./Leaderboard";
 
