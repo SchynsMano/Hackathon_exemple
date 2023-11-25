@@ -9,26 +9,15 @@ import {
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
-import Homes from "./pages/Homes";
 import Multi from "./components/multi";
 import Inscription from "./pages/Inscription";
 import Connection from "./pages/Connection";
 import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./pages/Home";
 
 const Stack = createStackNavigator();
-//a ajouter dans fonction app parfois :
-//<View style={styles.popup}>
-  //      <Multi></Multi>
-    //  </View>
-const Screen2 = () => {
-  return <View style={styles.screen2} />;
-};
 
-const InscriptionScreen = () => {
-  return <Inscription />;
-};
-
-export default function App() {
+const HomeScreen = () => {
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
 
@@ -49,6 +38,7 @@ export default function App() {
       />
     );
   };
+
   const renderTabBar = ({ routeName, selectedTab, navigate }) => {
     return (
       <TouchableOpacity
@@ -60,50 +50,62 @@ export default function App() {
     );
   };
 
+  // Define the Home screen component here
+  return (
+    <CurvedBottomBarExpo.Navigator
+      type="DOWN"
+      screenOptions={{
+        headerShown: false,
+      }}
+      style={styles.bottomBar}
+      shadowStyle={styles.shawdow}
+      height={55}
+      circleWidth={50}
+      bgColor="white"
+      initialRouteName="title1"
+      borderTopLeftRight
+      renderCircle={({ selectedTab, navigate }) => (
+        <Animated.View style={styles.btnCircleUp}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => Alert.alert("Click Action")}
+          >
+            <Ionicons name={"apps-sharp"} color="gray" size={25} />
+          </TouchableOpacity>
+        </Animated.View>
+      )}
+      tabBar={renderTabBar}
+    >
+      <CurvedBottomBarExpo.Screen
+        name="title1"
+        position="LEFT"
+        component={() => HomeCall()}
+      />
+      <CurvedBottomBarExpo.Screen
+        name="title2"
+        component={() => HomesCall()}
+        position="RIGHT"
+      />
+    </CurvedBottomBarExpo.Navigator>
+  );
+};
+
+const HomesCall = () => {
+  return <></>;
+};
+
+const HomeCall = () => {
+  return <></>;
+};
+
+export default function App() {
   return (
     <>
-     
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Connection">
           <Stack.Screen
             name="Home"
-            component={() => (
-              <CurvedBottomBarExpo.Navigator
-                type="DOWN"
-                screenOptions={{
-                  headerShown: false,
-                }}
-                style={styles.bottomBar}
-                shadowStyle={styles.shawdow}
-                height={55}
-                circleWidth={50}
-                bgColor="white"
-                initialRouteName="title1"
-                borderTopLeftRight
-                renderCircle={({ selectedTab, navigate }) => (
-                  <Animated.View style={styles.btnCircleUp}>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => Alert.alert("Click Action")}
-                    >
-                      <Ionicons name={"apps-sharp"} color="gray" size={25} />
-                    </TouchableOpacity>
-                  </Animated.View>
-                )}
-                tabBar={renderTabBar}
-              >
-                <CurvedBottomBarExpo.Screen
-                  name="title1"
-                  position="LEFT"
-                  component={() => <Homes />}
-                />
-                <CurvedBottomBarExpo.Screen
-                  name="title2"
-                  component={() => <Screen2 />}
-                  position="RIGHT"
-                />
-              </CurvedBottomBarExpo.Navigator>
-            )}
+            component={HomeScreen}
             options={{
               headerShown: false,
             }}
@@ -120,12 +122,12 @@ export default function App() {
             }}
           />
           <Stack.Screen
-          name="Connection"
-          component={Connection}
-          options={{
-          headerShown: false, // Retire la barre de navigation pour cet écran
-        }}
-      />
+            name="Connection"
+            component={Connection}
+            options={{
+              headerShown: false, // Retire la barre de navigation pour cet écran
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -137,7 +139,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   container: {
     flex: 1,
