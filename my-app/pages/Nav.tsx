@@ -142,49 +142,61 @@ const HomesCall = () => {
 const HomeCall = () => {
   return <Home />;
 };
-
 export default function Nav() {
   return (
-    <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Connection">
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Inscription"
-            component={Inscription}
-            options={{
-              title: "Inscription",
-              headerStyle: {
-                backgroundColor: "blue",
-              },
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Connection"
-            component={Connection}
-            options={{
-              headerShown: false, // Retire la barre de navigation pour cet écran
-            }}
-          /> 
-          <Stack.Screen
-            name="Create"
-            component={Create}
-            options={{
-              headerShown: false, // Retire la barre de navigation pour cet écran
-            }}
-          /> 
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Connection">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Inscription"
+          component={Inscription}
+          options={{
+            title: "Inscription",
+            headerStyle: {
+              backgroundColor: "blue",
+            },
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Connection"
+          component={Connection}
+          options={{
+            headerShown: false, // Masque la barre de navigation pour cet écran
+          }}
+        />
+        <Stack.Screen
+          name="Create"
+          component={Create}
+          options={{
+            headerShown: true,
+            headerTitle: "Créer un événement",
+            headerStyle: {
+              backgroundColor: "rgb(230, 220, 320)",
+              height: 70,
+            },
+            headerTitleAlign: 'center',
+             // Affiche la barre de navigation pour cet écran
+
+             
+            
+             
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+    
+  
+
 
 export const styles = StyleSheet.create({
   popup: {
