@@ -7,6 +7,7 @@ import { Input } from "@rneui/base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from 'axios';
 
+
 const Connection = () => {
   const navigation = useNavigation();
   const [inpuNames, setInputName] = useState('');
@@ -26,32 +27,41 @@ const Connection = () => {
     // Ajoutez ici le code que vous souhaitez exécuter lorsque le bouton est cliqué
   };
 
-  const handlePressConn = () => {
+  const handlePressConn = async () => {
     console.log(inpuNames);
     console.log(inpuPassw);
-    if(inpuNames != "" && inpuPassw != ""){
+  
+    if (inpuNames !== "" && inpuPassw !== "") {
+      try {
+        const requestData = {
+          username: inpuNames,
+          mdp: inpuPassw,
+          // Ajoutez d'autres données selon les besoins
+        };
+  
+        const response = await axios.post('http://10.0.2.2:5000/api/dataConn', requestData);
+  
+        // Vérifiez si la réponse est OK (status code 2xx)
+        if (!response.data.error) {
+          console.log('Connexion réussie!');
+          // Assurez-vous de définir setData en tant que state si nécessaire
+          // setData(response.data.message);
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Inscription");
 
-    
-    try {
-      const requestData = {
-        username: inpuNames,
-        mdp: inpuPassw,
-        // Ajoutez d'autres données selon les besoins
-      };
-
-      const response =  axios.post('http://10.0.2.2:5000/api/data', requestData);
-
-      // Assurez-vous de définir setData en tant que state si nécessaire
-      // setData(response.data.message);
-    } catch (error) {
-      console.error('Une erreur s\'est produite lors de la récupération des données', error);
-    }
-    navigation.navigate("Home");
-    
-    }else{
-        showAlert();
+          // Gérer l'erreur en fonction de vos besoins
+        }
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des données', error);
+        navigation.navigate("Inscription");
+        // Gérer l'erreur en fonction de vos besoins
+      }
+    } else {
+      showAlert();
     }
   };
+  
 
   return (
     <View style={styles.container}>

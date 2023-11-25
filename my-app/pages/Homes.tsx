@@ -1,8 +1,15 @@
 import React from "react";
 import { View, ScrollView, StatusBar, StyleSheet, Text } from "react-native";
 import CountDown from "react-native-countdown-component";
+import React,{ useState}  from 'react';
+import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
+import CountDown from 'react-native-countdown-component';
+
+
 
 const Homes = () => {
+  
+
   const COLORS = {
     Black: "black",
     Orange: "orange",
@@ -69,6 +76,7 @@ const Homes = () => {
         timeLabels={{ d: "DD", h: "HH", m: "MM", s: "SS" }}
         showSeparator
       />
+
     </View>
   );
 };
