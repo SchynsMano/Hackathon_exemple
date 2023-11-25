@@ -27,7 +27,6 @@ export default function Multi() {
   ];
 
   const handlePressButton = async (buttonN) => {
-
     if (buttonN === "Button 4") {
       try {
         const response = await axios.get("http://10.0.2.2:5000/api/admin");
@@ -50,7 +49,7 @@ export default function Multi() {
       }
     }
     else{
-      navigation.navigate(buttonN);
+      navigation.navigate("Leaderboard");
     }
   };
 
