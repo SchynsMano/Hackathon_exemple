@@ -18,6 +18,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
+import Create from "./Create";
+import Multi from "../components/multi";
+import { BlurView } from "expo-blur";
 
 const Stack = createStackNavigator();
 

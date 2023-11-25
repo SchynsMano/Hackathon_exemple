@@ -1,6 +1,9 @@
 import React,{ useState}  from 'react';
 import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 import CountDown from 'react-native-countdown-component';
+import { BlurView } from '@react-native-community/blur';
+
+
 
 
 

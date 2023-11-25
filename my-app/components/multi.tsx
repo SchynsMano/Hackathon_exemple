@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Color } from './GlobalStyles';
 import axios from 'axios';
 
+
 export default function Multi() {
   const navigation = useNavigation();
 
