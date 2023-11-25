@@ -19,7 +19,13 @@ import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
 import Create from "./Create";
+<<<<<<< HEAD
 import Multi from "../components/Multi";
+=======
+import Multi from "../components/multi";
+import Reglages from "./Reglages";
+import Geoguesser from "./Geoguesser";
+>>>>>>> 80e6cd10ba71c81bb890730a17c6a53101cc8037
 import { BlurView } from "expo-blur";
 import Leaderboard from "./Leaderboard";
 
