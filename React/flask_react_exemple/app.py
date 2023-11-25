@@ -10,6 +10,8 @@ admin = False
 users = [
     {"id": 1, "username": "mano", "mdp": "123", "entreprise": "john.doe@email.com"}
 ]
+countIdE = 0
+event = [{"id":0,"entreprise":"entreprise","image":"image", "jeu":"jeu", "date":"2023-11-25T12:30:00Z"}]
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
@@ -25,8 +27,10 @@ def post_data_conn():
         session['admin'] = True
         return jsonify(response_data)
     else:
+        session['admin'] = False
         for user in users:
             if user['username'] == data['username'] and user['mdp'] == data['mdp']:
+                session["user"] = user
                 response_data = {'message': f'Hello {data["username"]}! Your password is {data["mdp"]}'}
                 return jsonify(response_data)
 
@@ -55,7 +59,25 @@ def check_admin():
     if 'admin' in session and session['admin']:
         return jsonify({'message': 'Admin access granted!'})
     else:
-        return jsonify({'error': 'Admin access denied!'})        
+        return jsonify({'error': 'Admin access denied!'})   
+
+
+
+@app.route('/api/settingGame', methods=['POST'])
+def get_settings_game():
+    try:
+        global countIdE
+        data = request.get_json()
+        countIdE += 1
+
+        event.append({"id": countIdE, "entreprise": "hackathon", "image": data["image"], "jeu": data["jeu"],
+                      "date": data["date"]})
+
+        print(data)              
+
+        return jsonify({"success": True, "message": "Event created successfully"})
+    except Exception as e:
+        return jsonify({"error": False, "message": str(e)})       
 
 if __name__ == '__main__':
     app.run(debug=True)
