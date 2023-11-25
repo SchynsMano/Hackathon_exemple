@@ -17,10 +17,7 @@ import Connection from "../pages/Connection";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
-import Multi from "../components/multi";
-import { BlurView } from "expo-blur";
-import Create from "./Create"
-
+import Profile from "./Profile";
 
 const Stack = createStackNavigator();
 
@@ -136,7 +133,7 @@ const HomeScreen = () => {
 };
 
 const HomesCall = () => {
-  return <Homes />;
+  return <Profile></Profile>;
 };
 
 const HomeCall = () => {
