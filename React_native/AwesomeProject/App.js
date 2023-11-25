@@ -3,7 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Button } from 'react-native';
 
 import Page1 from './Page1';
-import Page2 from './Page2';
+import Connection from './Connection';
+import Inscription from './Inscription';
+import Home from './Home';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +34,23 @@ const App = () => {
       />
       <Stack.Screen
         name="Page2"
-        component={Page2}
+        component={Connection}
+        options={{
+          headerShown: false, // Retire la barre de navigation pour cet écran
+        }}
+      />
+
+    <Stack.Screen
+        name="Page3"
+        component={Inscription}
+        options={{
+          headerShown: false, // Retire la barre de navigation pour cet écran
+        }}
+      />
+
+    <Stack.Screen
+        name="Page4"
+        component={Home}
         options={{
           headerShown: false, // Retire la barre de navigation pour cet écran
         }}
