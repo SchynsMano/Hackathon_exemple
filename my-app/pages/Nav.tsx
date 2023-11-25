@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import {
   Alert,
   Animated,
@@ -18,25 +18,28 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
+import Create from "./Create";
+import Multi from "../components/multi";
+import { BlurView } from "expo-blur";
 
 const Stack = createStackNavigator();
 
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
-    const openModal = () => {
-      setModalVisible(true);
-    };
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-    const closeModal = () => {
-      setModalVisible(false);
-    };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
 
-   
 
-   
+
+
 
     switch (routeName) {
       case "title1":
@@ -58,7 +61,7 @@ const HomeScreen = () => {
 
   const renderTabBar = ({ routeName, selectedTab, navigate }) => {
 
-    
+
 
     return (
       <TouchableOpacity
@@ -82,19 +85,19 @@ const HomeScreen = () => {
         visible={modalVisible}
         onRequestClose={closeModal}
       >
-        
-        <BlurView intensity={5} style={{borderRadius: 10}} style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text>Contenu de la pop-up</Text>
-            <Multi/>
-            <TouchableOpacity onPress={closeModal}>
-              <Text>Fermer la pop-up</Text>
-            </TouchableOpacity>
-          </View>
-        </BlurView>
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={closeModal} // Use onPressOut to close the modal when the overlay is pressed
+        >
+          <BlurView intensity={5} style={styles.modalContainer}>
+              <Multi />
+          </BlurView>
+        </TouchableOpacity>
       </Modal>
 
-     
+
+
 
       <CurvedBottomBarExpo.Navigator
         type="DOWN"
@@ -163,20 +166,20 @@ export default function Nav() {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Connection"
             component={Connection}
             options={{
               headerShown: false, // Retire la barre de navigation pour cet écran
             }}
-          /> 
+          />  */}
           <Stack.Screen
             name="Create"
             component={Create}
             options={{
               headerShown: false, // Retire la barre de navigation pour cet écran
             }}
-          /> 
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -184,6 +187,12 @@ export default function Nav() {
 }
 
 export const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
   popup: {
     justifyContent: "center",
     alignItems: "center",
@@ -192,7 +201,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    
+
   },
   shawdow: {
     shadowColor: '#fff',
@@ -251,12 +260,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: '100%',
   },
   modalContent: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
+    // Add shadow or other styling as needed
   },
 });

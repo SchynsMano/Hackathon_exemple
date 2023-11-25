@@ -1,9 +1,9 @@
 import React from "react";
 import { View, ScrollView, StatusBar, StyleSheet, Text } from "react-native";
 import CountDown from "react-native-countdown-component";
-import React,{ useState}  from 'react';
-import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
-import CountDown from 'react-native-countdown-component';
+import { BlurView } from '@react-native-community/blur';
+
+
 
 
 
@@ -60,7 +60,7 @@ const Homes = () => {
         </ScrollView>
       </View>
       <Text>jhzbj</Text>
-      <CountDown
+      {/* <CountDown
         size={30}
         until={1000}
         onFinish={() => alert("Finished")}
@@ -75,7 +75,7 @@ const Homes = () => {
         timeToShow={["D", "H", "M", "S"]}
         timeLabels={{ d: "DD", h: "HH", m: "MM", s: "SS" }}
         showSeparator
-      />
+      /> */}
 
     </View>
   );
