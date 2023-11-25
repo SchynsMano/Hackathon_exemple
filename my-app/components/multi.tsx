@@ -27,6 +27,7 @@ export default function Multi() {
   ];
 
   const handlePressButton = async (buttonN) => {
+
     if (buttonN === "Button 4") {
       try {
         const response = await axios.get("http://10.0.2.2:5000/api/admin");
@@ -72,7 +73,6 @@ export default function Multi() {
                   onPress={() => handlePressButton(button.text)}
                 >
                   <Icon name={button.iconName} size={20} color="#fff" />
-                  {/* <Text style={styles.buttonText}>{button.text}</Text> */}
                 </TouchableOpacity>
               ))}
             </View>
