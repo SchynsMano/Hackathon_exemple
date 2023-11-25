@@ -50,9 +50,9 @@ export default function App() {
 
   return (
     <>
-      <View style={styles.popup}>
-        <Multi></Multi>
-      </View>
+      {/* <View style={styles.popup}> */}
+        {/* <Multi></Multi> */}
+      {/* </View> */}
       <NavigationContainer>
         <CurvedBottomBarExpo.Navigator
           type="DOWN"
