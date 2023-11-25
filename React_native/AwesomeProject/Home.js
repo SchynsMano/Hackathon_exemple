@@ -2,99 +2,64 @@ import React from 'react';
 import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 
 
+import { useEffect, useRef } from "react";
+import { AppState } from "react-native";
+import moment from "moment";
 
-const Home = () => {
-  const COLORS = {
-    Black: 'black',
-    Orange: 'orange',
-    // Ajoutez d'autres couleurs au besoin
+
+function TimeTriggeredScheduler({ children }) {
+
+  // Ref to store the current app state
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    // Load the timer when the component mounts and register the event listener for app state changes
+
+  const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        // Load the timer when the app returns to the foreground
+        loadTimer();
+      } 
+      else if (nextAppState === "background" || nextAppState === "inactive") {
+        // Save the timer value when the app goes to the background
+        saveTimerValue();
+      }
+
+      // Update the current app state
+      appState.current = nextAppState;
+    });
+
+
+    // Clean up the event listener on component unmount
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
+  // Function to save the timer value to AsyncStorage when the app goes to the background
+
+  const saveTimerValue = async () => {
+    // Code to save the timer value to AsyncStorage
   };
 
-  const SPACING = {
-    space_36: 36,
-    space_28: 28,
-    // Ajoutez d'autres espaces au besoin
+  // Function to load the timer value from AsyncStorage when the app returns to the foreground
+
+  const loadTimer = async () => {
+    // Code to load the timer value from AsyncStorage
   };
 
   return (
-    //horizontale : le mode horizontal, pagingEnabled active le fait qu'après chaque scroll on arrête de scroll
-    
-    <View>
-        <View style={styles.containerScroll}>
-            <ScrollView horizontal pagingEnabled style={styles.mainScrollView}>
-                
-            {/* Premier écran défilable */}
-            <ScrollView style={styles.container} bounces={false} contentContainerStyle={styles.scrollViewContainer}>
-                <StatusBar hidden />
-
-                {/* View a afficher dans le scroll */}
-                <View style={styles.contentContainer}>
-                <View style={styles.carre} backgroundColor="grey"/>
-                </View>
-
-            </ScrollView>
-
-            {/* Deuxième écran défilable */}
-            <ScrollView style={styles.container} bounces={false} contentContainerStyle={styles.scrollViewContainer}>
-                <StatusBar hidden />
-
-                {/* View a afficher dans le scroll */}
-                <View style={styles.contentContainer}>
-                    <View style={styles.carre} backgroundColor="blue" >
-                    <Text>hello</Text>
-                </View>
-                </View>
-            </ScrollView>
-            </ScrollView>
-        </View>
-        <Text>jhzbj</Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Current App State: {appState}</Text>
     </View>
-    
   );
-};
+}
 
-const styles = StyleSheet.create({
 
-    containerScroll:{
-        marginTop:100,
-        backgroundColor:"transparent",
-        height:400,
-    },
-  mainScrollView: {
-    flex: 1,
-    
-    
-  },
-  container: {
-    flex: 1,
-    
-  },
-  scrollViewContainer: {
-    flex: 1,
-  },
-  inputHeaderContainer: {
-    marginHorizontal: 36,
-    marginTop: 28,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-     // Couleur de la bordure
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-  },
+export default TimeTriggeredScheduler;
 
-  carre: {
-    width: 300,
-    height: 300,
-    borderRadius: 10, // Vous pouvez ajuster cette valeur selon vos préférences
-  },
-  
-  // Ajoutez d'autres styles au besoin
-});
 
-export default Home;
