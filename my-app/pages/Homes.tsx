@@ -3,7 +3,7 @@ import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 
 
 
-const Home = () => {
+const Homes = () => {
   const COLORS = {
     Black: 'black',
     Orange: 'blue',
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   // Ajoutez d'autres styles au besoin
 });
 
-export default Home;
+export default Homes;
