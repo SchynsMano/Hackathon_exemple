@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
 const leaderboard = [
   {
@@ -11,11 +12,16 @@ const leaderboard = [
 ];
 
 const Profile = () => {
+  const [modifiedName, setModifiedName] = useState(leaderboard[0].name);
+
+  const handleNameChange = (text) => {
+    setModifiedName(text);
+  };
   const navigation = useNavigation();
 
   const navigateToAnotherPage = () => {
     // Navigate to another screen with the panel parameter
-    navigation.navigate('Connection', { panel: 'details' });
+    navigation.navigate('Geoguesser', { panel: 'details' });
   };
 
   return (
