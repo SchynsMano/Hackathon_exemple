@@ -26,13 +26,6 @@ const AchievementItem = ({ title, iconUri }) => (
 
 
 const Profile = () => {
-  const [modifiedName, setModifiedName] = useState(leaderboard[0].name);
-
-  const handleNameChange = (text) => {
-    setModifiedName(text);
-  };
-  const navigation = useNavigation();
-
   return (
     
     <View style={styles.container}>
