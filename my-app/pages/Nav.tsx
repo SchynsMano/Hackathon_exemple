@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
     padding: 20,
   },
   shawdow: {
-    shadowColor: "#DDDDDD",
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 0,
