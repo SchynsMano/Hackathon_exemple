@@ -9,11 +9,23 @@ import {
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
-import Home from "./pages/Home";
+import Homes from "./pages/Homes";
 import Multi from "./components/multi";
+import Inscription from "./pages/Inscription";
+import Connection from "./pages/Connection";
+import { createStackNavigator } from "@react-navigation/stack";
 
+const Stack = createStackNavigator();
+//a ajouter dans fonction app parfois :
+//<View style={styles.popup}>
+  //      <Multi></Multi>
+    //  </View>
 const Screen2 = () => {
   return <View style={styles.screen2} />;
+};
+
+const InscriptionScreen = () => {
+  return <Inscription />;
 };
 
 export default function App() {
@@ -50,45 +62,71 @@ export default function App() {
 
   return (
     <>
-      {/* <View style={styles.popup}> */}
-        {/* <Multi></Multi> */}
-      {/* </View> */}
+     
       <NavigationContainer>
-        <CurvedBottomBarExpo.Navigator
-          type="DOWN"
-          screenOptions={{
-            headerShown: false,
-          }}
-          style={styles.bottomBar}
-          shadowStyle={styles.shawdow}
-          height={55}
-          circleWidth={50}
-          bgColor="white"
-          initialRouteName="title1"
-          borderTopLeftRight
-          renderCircle={({ selectedTab, navigate }) => (
-            <Animated.View style={styles.btnCircleUp}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => Alert.alert("Click Action")}
+        <Stack.Navigator initialRouteName="Connection">
+          <Stack.Screen
+            name="Home"
+            component={() => (
+              <CurvedBottomBarExpo.Navigator
+                type="DOWN"
+                screenOptions={{
+                  headerShown: false,
+                }}
+                style={styles.bottomBar}
+                shadowStyle={styles.shawdow}
+                height={55}
+                circleWidth={50}
+                bgColor="white"
+                initialRouteName="title1"
+                borderTopLeftRight
+                renderCircle={({ selectedTab, navigate }) => (
+                  <Animated.View style={styles.btnCircleUp}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => Alert.alert("Click Action")}
+                    >
+                      <Ionicons name={"apps-sharp"} color="gray" size={25} />
+                    </TouchableOpacity>
+                  </Animated.View>
+                )}
+                tabBar={renderTabBar}
               >
-                <Ionicons name={"apps-sharp"} color="gray" size={25} />
-              </TouchableOpacity>
-            </Animated.View>
-          )}
-          tabBar={renderTabBar}
-        >
-          <CurvedBottomBarExpo.Screen
-            name="title1"
-            position="LEFT"
-            component={() => <Home />}
+                <CurvedBottomBarExpo.Screen
+                  name="title1"
+                  position="LEFT"
+                  component={() => <Homes />}
+                />
+                <CurvedBottomBarExpo.Screen
+                  name="title2"
+                  component={() => <Screen2 />}
+                  position="RIGHT"
+                />
+              </CurvedBottomBarExpo.Navigator>
+            )}
+            options={{
+              headerShown: false,
+            }}
           />
-          <CurvedBottomBarExpo.Screen
-            name="title2"
-            component={() => <Screen2 />}
-            position="RIGHT"
+          <Stack.Screen
+            name="Inscription"
+            component={Inscription}
+            options={{
+              title: "Inscription",
+              headerStyle: {
+                backgroundColor: "blue",
+              },
+              headerShown: false,
+            }}
           />
-        </CurvedBottomBarExpo.Navigator>
+          <Stack.Screen
+          name="Connection"
+          component={Connection}
+          options={{
+          headerShown: false, // Retire la barre de navigation pour cet écran
+        }}
+      />
+        </Stack.Navigator>
       </NavigationContainer>
     </>
   );
