@@ -10,7 +10,7 @@ interface EventCardProps {
   timeAgo: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ imageUrl, eventDate, eventMonth, title, description, timeAgo }) => {
+const ContestCard: React.FC<EventCardProps> = ({ imageUrl, eventDate, eventMonth, title, description, timeAgo }) => {
   return (
     <View style={styles.card}>
       <TouchableOpacity>
@@ -19,10 +19,6 @@ const EventCard: React.FC<EventCardProps> = ({ imageUrl, eventDate, eventMonth, 
       </TouchableOpacity>
       <TouchableOpacity style={styles.photosButton}>
         <Text style={styles.photosButtonText}>The insane event</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.dateContainer}>
-        <Text style={styles.dateText}>{eventDate}</Text>
-        <Text style={styles.monthText}>{eventMonth}</Text>
       </TouchableOpacity>
       <View style={styles.content}>
         <TouchableOpacity>
@@ -46,7 +42,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-    width: 200,
+    width: '80%',
     height: 200,
   },
   image: {
@@ -113,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventCard;
+export default ContestCard;

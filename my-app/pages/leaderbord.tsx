@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 
 const leaderboard = [
   {
@@ -29,28 +29,35 @@ const leaderboard = [
     image: require('../assets/personne3.avif'),
     medal: require('../assets/bronze.png'),
   },
-  // Add more users as needed
 ];
 
-const Profile = () => {
+
+const Leaderboard = () => {
+  // renderItem function for FlatList
+  const renderItem = ({ item }) => (
+    <View style={styles.userContainer}>
+      <Image source={item.medal} style={styles.medalImage} />
+      <Image source={item.image} style={styles.userImage} />
+      <View style={styles.userInfo}>
+        <Text style={styles.userName}>{item.name}</Text>
+        <View style={styles.userStats}>
+          <Text style={styles.userStatsText}>{item.matches} Matches</Text>
+          <Text style={styles.userStatsText}>{item.totalPoints} Points</Text>
+          <Text style={styles.userStatsText}>{item.wins} Wins</Text>
+        </View>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.centeredText}>Leaderboard</Text>
-      {leaderboard.map((user, index) => (
-        <View key={index} style={styles.userContainer}>
-          <View style={styles.userData}>
-            <Text>{user.position}</Text>
-            <Image source={user.image} style={styles.userImage} />
-            <Text>{user.name}</Text>
-          </View>
-          <View style={styles.scoreContainer}>
-            <Text>{user.matches} Matches</Text>
-            <Text>{user.totalPoints} Points</Text>
-            <Text>{user.wins} Wins</Text>
-            <Image source={user.medal} style={styles.medalImage} />
-          </View>
-        </View>
-      ))}
+      <FlatList
+        data={leaderboard.sort((a, b) => b.totalPoints - a.totalPoints)}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.list}
+      />
     </View>
   );
 };
@@ -58,42 +65,61 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#F5FCFF',
     paddingTop: 20,
   },
   centeredText: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white',
-    marginBottom: 10,
+    color: '#0D0F13',
+    marginBottom: 20,
   },
   userContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginBottom: 15,
-  },
-  userData: {
-    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginHorizontal: 20,
+    marginBottom: 15,
+    elevation: 3, // for android shadow
+    shadowColor: '#000', // for ios shadow
+    shadowOffset: { width: 0, height: 2 }, // for ios shadow
+    shadowOpacity: 0.1, // for ios shadow
+    shadowRadius: 2, // for ios shadow
+  },
+  medalImage: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
   },
   userImage: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginRight: 10,
   },
-  scoreContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-end',
+  userInfo: {
+    flex: 1,
+    marginLeft: 10,
   },
-  medalImage: {
-    width: 20,
-    height: 20,
+  userName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0D0F13',
+  },
+  userStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 5,
+  },
+  userStatsText: {
+    fontSize: 14,
+    color: '#656565',
+  },
+  list: {
+    width: '100%',
   },
 });
 
-export default Profile;
+export default Leaderboard;
