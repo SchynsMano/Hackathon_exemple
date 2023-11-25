@@ -29,11 +29,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
-<<<<<<< HEAD
-=======
     "react-native-countdown-component": "^2.7.1",
     "react-native-countdown-fixed": "^2.7.1",
->>>>>>> 4fe3a74a (Timer crash fixed, but resets)
     "react-native-curved-bottom-bar": "^3.2.6",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-paper": "^5.11.2",

@@ -59,16 +59,11 @@ const Carousel = () => {
 export default function Home() {
   return (
     <View style={styles.view}>
-<<<<<<< HEAD
-        {/* <Text style={styles.title}>Explore events</Text> */}
-        <Search/>
-=======
       <EventHeader dateTime={"DECEMBER 16, 9:10 PM"} profileUri={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
 
       {/* <Text style={styles.title}>Explore events</Text> */}
       <Search />
       <Carousel />
->>>>>>> 78b1ee918e0535ca01e351019c075f0f64c8068d
     </View>
   );
 }
