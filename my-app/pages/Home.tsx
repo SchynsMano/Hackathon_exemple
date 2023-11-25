@@ -10,8 +10,8 @@ export default function Home() {
 
   return (
     <View style={styles.view}>
-        <Text style={styles.title}>Explore events</Text>
-        <Search/>
+        {/* <Text style={styles.title}>Explore events</Text> */}
+        {/* <Search/> */}
     </View>
   );
 }
