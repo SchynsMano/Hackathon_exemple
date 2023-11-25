@@ -1,12 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import TopProfile from '../components/Profile/Top';
 import Tab from '../components/Profile/Tab';
->>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
 
 const achievements = [
   {
@@ -37,14 +33,6 @@ const Profile = () => {
   };
   const navigation = useNavigation();
 
-<<<<<<< HEAD
-  const navigateToAnotherPage = () => {
-    // Navigate to another screen with the panel parameter
-    navigation.navigate('Geoguesser', { panel: 'details' });
-  };
-
-=======
->>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
   return (
     
     <View style={styles.container}>

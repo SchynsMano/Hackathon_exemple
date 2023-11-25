@@ -178,13 +178,13 @@ export default function Nav() {
               },
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Geoguesser"
             component={Geoguesser}
             options={{
               title: "Geoguesser",
             }}
-          />
+          /> */}
           {/* <Stack.Screen
             name="Connection"
             component={Connection}
