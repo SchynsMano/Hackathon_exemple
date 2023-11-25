@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
+import { Color } from "./GlobalStyles";
 import axios from "axios";
 
 export default function Multi() {
@@ -21,8 +22,8 @@ export default function Multi() {
     { text: "Button 2", iconName: "search" },
     { text: "Button 3", iconName: "user" },
     { text: "Button 4", iconName: "plus" },
-    { text: "Button 5", iconName: "ranking-star" },
     { text: "Button 6", iconName: "heart" },
+    { text: "Leaderboard", iconName: "star" },
   ];
 
   const handlePressButton = async (buttonN) => {
@@ -46,6 +47,9 @@ export default function Multi() {
         );
         navigation.navigate("Home");
       }
+    }
+    else{
+      navigation.navigate("Leaderboard");
     }
   };
 
