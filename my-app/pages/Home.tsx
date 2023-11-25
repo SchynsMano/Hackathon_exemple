@@ -6,6 +6,7 @@ import { View, ScrollView, StatusBar, StyleSheet } from "react-native";
 import EventCard from "../components/Event";
 import Top from "../components/Top";
 import EventHeader from "../components/Top";
+import { AppState } from "react-native";
 
 const Carousel = () => {
   return (
