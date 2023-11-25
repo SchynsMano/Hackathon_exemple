@@ -21,6 +21,7 @@ import Create from "./Create";
 import Multi from "../components/Multi";
 import { BlurView } from "expo-blur";
 import Leaderboard from "./Leaderboard";
+import Geoguesser from "./Games/Geoguesser";
 
 const Stack = createStackNavigator();
 
@@ -129,7 +130,8 @@ export default function Nav() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Inscription" component={Inscription} />
           <Stack.Screen name="Connection" component={Connection} />
-          <Stack.Screen name="Create" component={Create} />
+          <Stack.Screen name="Marker" component={Geoguesser} />
+          {/* <Stack.Screen name="Create" component={Create} /> */}
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
         </Stack.Navigator>
       </NavigationContainer>

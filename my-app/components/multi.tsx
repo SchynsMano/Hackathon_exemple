@@ -18,7 +18,7 @@ export default function Multi() {
   };
 
   const buttons = [
-    { text: "Button 1", iconName: "home" },
+    { text: "Marker", iconName: "map-marker" },
     { text: "Button 2", iconName: "search" },
     { text: "Button 3", iconName: "user" },
     { text: "Button 4", iconName: "plus" },
@@ -49,7 +49,7 @@ export default function Multi() {
       }
     }
     else{
-      navigation.navigate("Leaderboard");
+      navigation.navigate(buttonN);
     }
   };
 
