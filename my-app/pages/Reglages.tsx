@@ -13,30 +13,8 @@ const Profile = () => {
     setModifiedName(text);
   };
 
-  const handleImageChange = () => {
-    ImagePicker.launchCamera(
-      {
-        cameraType: 'front',
-        allowsEditing: true,
-      },
-      (response) => {
-        if (response.uri) {
-          setProfileImage({ uri: response.uri });
-        }
-      }
-    );
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleImageChange}>
-        {profileImage ? (
-          <Image source={profileImage} style={styles.profileImage} />
-        ) : (
-          <Avatar.Text size={150} label="JD" />
-        )}
-      </TouchableOpacity>
-
       <TextInput
         style={styles.input}
         onChangeText={handleNameChange}
