@@ -25,6 +25,7 @@ def post_data_conn():
         session['admin'] = True
         return jsonify(response_data)
     else:
+        session['admin'] = False
         for user in users:
             if user['username'] == data['username'] and user['mdp'] == data['mdp']:
                 response_data = {'message': f'Hello {data["username"]}! Your password is {data["mdp"]}'}
