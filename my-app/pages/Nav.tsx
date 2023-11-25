@@ -16,6 +16,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
+import Reglages from "./Reglages";
+import Geoguesser from "./Geoguesser";
 
 const Stack = createStackNavigator();
 
@@ -121,6 +123,23 @@ export default function Nav() {
                 backgroundColor: "blue",
               },
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Reglages"
+            component={Reglages}
+            options={{
+              title: "Reglages",
+              headerStyle: {
+                backgroundColor: "blue",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Geoguesser"
+            component={Geoguesser}
+            options={{
+              title: "Geoguesser",
             }}
           />
           {/* <Stack.Screen
