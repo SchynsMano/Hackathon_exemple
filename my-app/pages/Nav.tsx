@@ -18,14 +18,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
-<<<<<<< HEAD
-import Reglages from "./Reglages";
-import Geoguesser from "./Geoguesser";
-=======
 import Create from "./Create";
 import Multi from "../components/multi";
+import Reglages from "./Reglages";
+import Geoguesser from "./Geoguesser";
 import { BlurView } from "expo-blur";
->>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
 
 const Stack = createStackNavigator();
 
