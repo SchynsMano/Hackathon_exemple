@@ -6,7 +6,7 @@ import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 const Home = () => {
   const COLORS = {
     Black: 'black',
-    Orange: 'orange',
+    Orange: 'blue',
     // Ajoutez d'autres couleurs au besoin
   };
 

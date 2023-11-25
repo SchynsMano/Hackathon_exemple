@@ -13,6 +13,7 @@ import Homes from "./pages/Homes";
 import Multi from "./components/multi";
 import Inscription from "./pages/Inscription";
 import Connection from "./pages/Connection";
+import Profile from "./pages/Profile";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -21,7 +22,7 @@ const Stack = createStackNavigator();
   //      <Multi></Multi>
     //  </View>
 const Screen2 = () => {
-  return <View style={styles.screen2} />;
+  return <Profile></Profile>
 };
 
 const InscriptionScreen = () => {
@@ -125,7 +126,7 @@ export default function App() {
           options={{
           headerShown: false, // Retire la barre de navigation pour cet écran
         }}
-      />
+        />
         </Stack.Navigator>
       </NavigationContainer>
     </>

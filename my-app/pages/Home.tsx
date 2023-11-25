@@ -10,6 +10,7 @@ export default function Home() {
 
   return (
     <View style={styles.view}>
+        <Text>Hello</Text>
         <Search/>
     </View>
   );
