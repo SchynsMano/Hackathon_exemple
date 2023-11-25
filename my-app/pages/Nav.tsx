@@ -123,13 +123,13 @@ export default function Nav() {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Connection"
             component={Connection}
             options={{
               headerShown: false, // Retire la barre de navigation pour cet écran
             }}
-          />
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </>

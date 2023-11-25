@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
+import CountDown from 'react-native-countdown-component';
 
 
 
@@ -48,6 +49,18 @@ const Homes = () => {
             </ScrollView>
         </View>
         <Text>jhzbj</Text>
+		<CountDown
+        size={30}
+        until={1000}
+        onFinish={() => alert('Finished')}
+        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
+        digitTxtStyle={{color: '#1CC625'}}
+        timeLabelStyle={{color: 'steelblue', fontWeight: 'bold'}}
+        separatorStyle={{color: '#1CC625', fontSize: 50, bottom: 20}}
+        timeToShow={['D', 'H', 'M', 'S']}
+        timeLabels={{d: "DD", h: "HH" ,m: "MM", s: "SS"}}
+        showSeparator
+      />
     </View>
     
   );
