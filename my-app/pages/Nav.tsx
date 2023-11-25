@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import {
   Alert,
   Animated,
@@ -11,6 +11,7 @@ import {
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
+// import Multi from "./components/multi";
 import Inscription from "../pages/Inscription";
 import Connection from "../pages/Connection";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -18,18 +19,27 @@ import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
 import Create from "./Create";
-import Multi from "../components/Multi";
+import Multi from "../components/multi";
 import { BlurView } from "expo-blur";
-import Leaderboard from "./Leaderboard";
 
 const Stack = createStackNavigator();
 
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const toggleModal = () => setModalVisible(!modalVisible);
 
+    const openModal = () => {
+      setModalVisible(true);
+    };
+
+    const closeModal = () => {
+      setModalVisible(false);
+    };
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
+
+   
+
+   
 
     switch (routeName) {
       case "title1":
@@ -50,11 +60,14 @@ const HomeScreen = () => {
   };
 
   const renderTabBar = ({ routeName, selectedTab, navigate }) => {
+
+    
+
     return (
       <TouchableOpacity
         onPress={() => {
           navigate(routeName);
-          toggleModal();
+          closeModal(); // Close the modal when a tab is pressed
         }}
         style={styles.tabbarItem}
       >
@@ -70,18 +83,21 @@ const HomeScreen = () => {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={toggleModal}
+        onRequestClose={closeModal}
       >
-        <TouchableOpacity
-          style={styles.modalOverlay}
-          activeOpacity={1}
-          onPressOut={toggleModal} // Use onPressOut to close the modal when the overlay is pressed
-        >
-          <BlurView intensity={5} style={styles.modalContainer}>
-            <Multi />
-          </BlurView>
-        </TouchableOpacity>
+        
+        <BlurView intensity={5} style={{borderRadius: 10}} style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Contenu de la pop-up</Text>
+            <Multi/>
+            <TouchableOpacity onPress={closeModal}>
+              <Text>Fermer la pop-up</Text>
+            </TouchableOpacity>
+          </View>
+        </BlurView>
       </Modal>
+
+     
 
       <CurvedBottomBarExpo.Navigator
         type="DOWN"
@@ -97,7 +113,7 @@ const HomeScreen = () => {
         borderTopLeftRight
         renderCircle={({ selectedTab, navigate }) => (
           <Animated.View style={styles.btnCircleUp}>
-            <TouchableOpacity style={styles.button} onPress={toggleModal}>
+            <TouchableOpacity style={styles.button} onPress={openModal}>
               <Ionicons name={"apps-sharp"} color="gray" size={25} />
             </TouchableOpacity>
           </Animated.View>
@@ -107,11 +123,11 @@ const HomeScreen = () => {
         <CurvedBottomBarExpo.Screen
           name="title1"
           position="LEFT"
-          component={() => Home()}
+          component={() => HomeCall()}
         />
         <CurvedBottomBarExpo.Screen
           name="title2"
-          component={() => Profile()}
+          component={() => HomesCall()}
           position="RIGHT"
         />
       </CurvedBottomBarExpo.Navigator>
@@ -119,6 +135,13 @@ const HomeScreen = () => {
   );
 };
 
+const HomesCall = () => {
+  return <Profile></Profile>;
+};
+
+const HomeCall = () => {
+  return <Home />;
+};
 export default function Nav() {
   return (
     <>
@@ -138,13 +161,11 @@ export default function Nav() {
   );
 }
 
+    
+  
+
+
 export const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
-  },
   popup: {
     justifyContent: "center",
     alignItems: "center",
@@ -153,9 +174,10 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    
   },
   shawdow: {
-    shadowColor: "#fff",
+    shadowColor: "#DDDDDD",
     shadowOffset: {
       width: 0,
       height: 0,
@@ -209,15 +231,14 @@ export const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    alignItems: "center",
-    // Add shadow or other styling as needed
+    alignItems: 'center',
   },
 });
