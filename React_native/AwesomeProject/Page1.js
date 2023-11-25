@@ -1,45 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+
+import { View, Text, TouchableOpacity, Modal, StyleSheet,Button } from 'react-native';
+
 import axios from 'axios';
 
 const Page1 = ({ navigation }) => {
-  const [data, setData] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    // Fonction pour effectuer la requête à l'API Flask locale
-    const fetchData = async () => {
-      console.log("incomming");
-      try {
-        const response = await axios.get('http://10.0.2.2:5000/api/data');
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-
-        setData(response.data.message);
-      } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération des données', error);
-      }
-    };
-
-    // Appel de la fonction pour effectuer la requête lors du montage du composant
-    fetchData();
-  }, []); // Le tableau vide en tant que deuxième argument signifie que cela ne devrait s'exécuter qu'une seule fois lors du montage du composant
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Page 1</Text>
-      
-      {/* Afficher les données de l'API */}
-      {data ? (
-        <Text>Données de l'API : {JSON.stringify(data)}</Text>
-      ) : (
-        <Text>Chargement en cours...</Text>
-      )}
+    <View style={styles.container}>
+      <TouchableOpacity onPress={openModal}>
+        <Text>Afficher la pop-up</Text>
+      </TouchableOpacity>
 
-      <Button
-        title="Aller à la page 2"
-        onPress={() => navigation.navigate('Page2')}
-      />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Contenu de la pop-up</Text>
+            <TouchableOpacity onPress={closeModal}>
+              <Text>Fermer la pop-up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+});
+
 
 export default Page1;

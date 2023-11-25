@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{ useState}  from 'react';
 import { View, ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 
 
 
 const Homes = () => {
+  
+
   const COLORS = {
     Black: 'black',
     Orange: 'orange',
