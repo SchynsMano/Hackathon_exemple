@@ -1,18 +1,53 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { BlurView } from "expo-blur";
-import { Color } from './GlobalStyles';
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 export default function Multi() {
+  const navigation = useNavigation();
+
+  const showAlert = () => {
+    Alert.alert(
+      "Accès refusé",
+      "Merci de remplir avec un nom et un mot de passe correct.",
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+    );
+  };
+
   const buttons = [
     { text: "Button 1", iconName: "home" },
     { text: "Button 2", iconName: "search" },
     { text: "Button 3", iconName: "user" },
-    { text: "Button 4", iconName: "bell" },
-    { text: "Button 5", iconName: "cog" },
+    { text: "Button 4", iconName: "plus" },
+    { text: "Button 5", iconName: "ranking-star" },
     { text: "Button 6", iconName: "heart" },
   ];
+
+  const handlePressButton = async (buttonN) => {
+    if (buttonN === "Button 4") {
+      try {
+        const response = await axios.get("http://10.0.2.2:5000/api/admin");
+
+        // Vérifiez si la réponse est OK (status code 2xx)
+        if (!response.data.error) {
+          console.log("Admin access granted!");
+          navigation.navigate("Create");
+        } else {
+          console.log("Admin access denied!");
+          navigation.navigate("Home");
+          showAlert();
+        }
+      } catch (error) {
+        console.error(
+          "Une erreur s'est produite lors de la récupération des données",
+          error
+        );
+        navigation.navigate("Home");
+      }
+    }
+  };
 
   // Split buttons into rows of 3
   const buttonRows = [];
@@ -22,7 +57,7 @@ export default function Multi() {
 
   return (
     <View style={styles.view}>
-      <BlurView intensity={90} style={{borderRadius: 10}}>
+      <BlurView intensity={90} style={{ borderRadius: 10, overflow: "hidden" }}>
         <View style={styles.card}>
           {buttonRows.map((row, rowIndex) => (
             <View key={rowIndex} style={styles.buttonRow}>
@@ -30,7 +65,7 @@ export default function Multi() {
                 <TouchableOpacity
                   key={index}
                   style={styles.button}
-                  onPress={() => alert(`${button.text} clicked`)}
+                  onPress={() => handlePressButton(button.text)}
                 >
                   <Icon name={button.iconName} size={20} color="#fff" />
                   {/* <Text style={styles.buttonText}>{button.text}</Text> */}
@@ -49,7 +84,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
-    backgroundColor: "#0D0F13",
   },
   card: {
     borderRadius: 10,

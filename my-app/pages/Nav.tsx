@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Alert,
   Animated,
   StyleSheet,
   TouchableOpacity,
   View,
+  Modal,
+  Text,
 } from "react-native";
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,14 +18,33 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
 import Homes from "../pages/Homes";
 import Profile from "./Profile";
+<<<<<<< HEAD
 import Reglages from "./Reglages";
 import Geoguesser from "./Geoguesser";
+=======
+import Create from "./Create";
+import Multi from "../components/multi";
+import { BlurView } from "expo-blur";
+>>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
 
 const Stack = createStackNavigator();
 
 const HomeScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
+
+
+
+
 
     switch (routeName) {
       case "title1":
@@ -44,9 +65,15 @@ const HomeScreen = () => {
   };
 
   const renderTabBar = ({ routeName, selectedTab, navigate }) => {
+
+
+
     return (
       <TouchableOpacity
-        onPress={() => navigate(routeName)}
+        onPress={() => {
+          navigate(routeName);
+          closeModal(); // Close the modal when a tab is pressed
+        }}
         style={styles.tabbarItem}
       >
         {_renderIcon(routeName, selectedTab)}
@@ -56,41 +83,60 @@ const HomeScreen = () => {
 
   // Define the Home screen component here
   return (
-    <CurvedBottomBarExpo.Navigator
-      type="DOWN"
-      screenOptions={{
-        headerShown: false,
-      }}
-      style={styles.bottomBar}
-      shadowStyle={styles.shawdow}
-      height={55}
-      circleWidth={50}
-      bgColor="white"
-      initialRouteName="title1"
-      borderTopLeftRight
-      renderCircle={({ selectedTab, navigate }) => (
-        <Animated.View style={styles.btnCircleUp}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => Alert.alert("Click Action")}
-          >
-            <Ionicons name={"apps-sharp"} color="gray" size={25} />
-          </TouchableOpacity>
-        </Animated.View>
-      )}
-      tabBar={renderTabBar}
-    >
-      <CurvedBottomBarExpo.Screen
-        name="title1"
-        position="LEFT"
-        component={() => HomeCall()}
-      />
-      <CurvedBottomBarExpo.Screen
-        name="title2"
-        component={() => HomesCall()}
-        position="RIGHT"
-      />
-    </CurvedBottomBarExpo.Navigator>
+    <View style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={closeModal} // Use onPressOut to close the modal when the overlay is pressed
+        >
+          <BlurView intensity={5} style={styles.modalContainer}>
+              <Multi />
+          </BlurView>
+        </TouchableOpacity>
+      </Modal>
+
+
+
+
+      <CurvedBottomBarExpo.Navigator
+        type="DOWN"
+        screenOptions={{
+          headerShown: false,
+        }}
+        style={styles.bottomBar}
+        shadowStyle={styles.shawdow}
+        height={55}
+        circleWidth={50}
+        bgColor="white"
+        initialRouteName="title1"
+        borderTopLeftRight
+        renderCircle={({ selectedTab, navigate }) => (
+          <Animated.View style={styles.btnCircleUp}>
+            <TouchableOpacity style={styles.button} onPress={openModal}>
+              <Ionicons name={"apps-sharp"} color="gray" size={25} />
+            </TouchableOpacity>
+          </Animated.View>
+        )}
+        tabBar={renderTabBar}
+      >
+        <CurvedBottomBarExpo.Screen
+          name="title1"
+          position="LEFT"
+          component={() => HomeCall()}
+        />
+        <CurvedBottomBarExpo.Screen
+          name="title2"
+          component={() => HomesCall()}
+          position="RIGHT"
+        />
+      </CurvedBottomBarExpo.Navigator>
+    </View>
   );
 };
 
@@ -148,7 +194,14 @@ export default function Nav() {
             options={{
               headerShown: false, // Retire la barre de navigation pour cet écran
             }}
-          /> */}
+          />  */}
+          <Stack.Screen
+            name="Create"
+            component={Create}
+            options={{
+              headerShown: false, // Retire la barre de navigation pour cet écran
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -156,6 +209,12 @@ export default function Nav() {
 }
 
 export const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
   popup: {
     justifyContent: "center",
     alignItems: "center",
@@ -164,10 +223,10 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+
   },
   shawdow: {
-    shadowColor: "#DDDDDD",
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -218,5 +277,18 @@ export const styles = StyleSheet.create({
   screen2: {
     flex: 1,
     backgroundColor: "#FFEBCD",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    // Add shadow or other styling as needed
   },
 });

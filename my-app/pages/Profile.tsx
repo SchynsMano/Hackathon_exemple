@@ -1,15 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+import TopProfile from '../components/Profile/Top';
+import Tab from '../components/Profile/Tab';
+>>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
 
-const leaderboard = [
+const achievements = [
   {
-    name: 'Matsco',
-    position: 1,
+    id: '1',
+    title: 'First Win',
+    iconUri: 'https://cdn4.iconfinder.com/data/icons/awards-26/270932/13-512.png', // Replace with your icon URL
   },
-  // Add more users as needed
+  {
+    id: '2',
+    title: 'High Score',
+    iconUri: 'https://cdn1.iconfinder.com/data/icons/art-design-and-development-glyphs-vol-1/70/award__cup__trophy__achievement__prize-512.png', // Replace with your icon URL
+  },
 ];
+
+const AchievementItem = ({ title, iconUri }) => (
+  <View style={styles.achievementItem}>
+    <Image source={{ uri: iconUri }} style={styles.achievementIcon} />
+    <Text style={styles.achievementText}>{title}</Text>
+  </View>
+);
+
 
 const Profile = () => {
   const [modifiedName, setModifiedName] = useState(leaderboard[0].name);
@@ -19,62 +37,44 @@ const Profile = () => {
   };
   const navigation = useNavigation();
 
+<<<<<<< HEAD
   const navigateToAnotherPage = () => {
     // Navigate to another screen with the panel parameter
     navigation.navigate('Geoguesser', { panel: 'details' });
   };
 
+=======
+>>>>>>> 26b9e6e962c919b902d2064fdc82e3d8cc39e421
   return (
+    
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Image
-          source={require('../assets/goldo.jpg')} // Replace with your image path
-          style={styles.profileImage}
-        />
-        <Text style={styles.userName}>{leaderboard[0].name}</Text>
-        <Text style={styles.topText}>Top:</Text>
-        <TouchableOpacity onPress={navigateToAnotherPage}>
-          <Image
-            source={require('../assets/reglages.png')} // Replace with your image path
-            style={styles.medalImage}
-          />
-        </TouchableOpacity>
-        {leaderboard.map((user, index) => (
-          <View key={index} style={styles.userContainer}>
-            <View style={styles.userData}>
-              <Text style={styles.positionText}>{user.position}</Text>
-              {user.position === 1 && (
-                <Image
-                  source={require('../assets/or.png')} // Replace with your image path
-                  style={styles.medalImage}
-                />
-              )}
-              {user.position === 2 && (
-                <Image
-                  source={require('../assets/argent.png')} // Replace with your image path
-                  style={styles.medalImage}
-                />
-              )}
-              {user.position === 3 && (
-                <Image
-                  source={require('../assets/bronze.png')} // Replace with your image path
-                  style={styles.medalImage}
-                />
-              )}
-            </View>
-          </View>
-        ))}
-      </View>
+      <TopProfile />
+      <Text style={styles.title}>Last Games</Text>
+      <Tab />
+      <Text style={styles.title}>Achievements</Text>
+      <FlatList
+        data={achievements}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <AchievementItem title={item.title} iconUri={item.iconUri} />
+        )}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    padding: 20,
+    color: "#0D0F13",
+    fontSize: 18,
+    fontWeight: "bold",
+    alignSelf: "flex-start",
+    marginLeft: 8,
+  },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 15, 20, 1)', // Darker shade of blue
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff', // Darker shade of blue
   },
   content: {
     alignItems: 'center',
@@ -125,6 +125,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textDecorationLine: 'underline',
     marginTop: 20,
+  },
+  achievementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0', // Use a light background color for the achievement items
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 5, // Add space between achievement items
+    marginHorizontal: 10,
+    shadowColor: '#000', // Optional shadow for iOS
+    shadowOffset: { width: 0, height: 2 }, // Optional shadow for iOS
+    shadowOpacity: 0.2, // Optional shadow for iOS
+    shadowRadius: 2, // Optional shadow for iOS
+    elevation: 3, // Optional shadow for Android
+  },
+  achievementIcon: {
+    width: 30, // Adjust width as needed
+    height: 30, // Adjust height as needed
+    marginRight: 10, // Add some margin to separate the icon from the text
+  },
+  achievementText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
 

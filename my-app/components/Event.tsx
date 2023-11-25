@@ -14,7 +14,6 @@ const EventCard: React.FC<EventCardProps> = ({ imageUrl, eventDate, eventMonth, 
   return (
     <View style={styles.card}>
       <TouchableOpacity>
-        {/* source is an file */}
         <Image source={require('../assets/banner.png')} style={styles.image} />
         <View style={styles.overlay} />
       </TouchableOpacity>

@@ -1,22 +1,59 @@
 
 import { useState, useEffect } from 'react';
 import * as React from "react";
-import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, Image , Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from "@rneui/base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from 'axios';
+
 
 const Inscription = () => {
   const navigation = useNavigation();
-  const [inputValue, setInputValue] = useState('');
+  const [inpuNames, setInputName] = useState('');
+  const [inpuEmail, setInputEmail] = useState('');
+  const [inpuMdp, setInputMdp] = useState('');
+  const [inpuEnt, setInputEnt] = useState('');
 
-  const handlePressInsc = () => {
-    console.log("Le bouton a été cliqué !");
-    navigation.navigate("Homes");
-    // Ajoutez ici le code que vous souhaitez exécuter lorsque le bouton est cliqué
+  const showAlert = () => {
+    Alert.alert(
+      'Authentification ratée',
+      'Merci de remplir avec un nom et un mot de passe correct.',
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+    );
   };
 
-  
+  const handlePressInsc = async() => {
+    console.log(inpuNames);
+    console.log(inpuMdp);
+    console.log(inpuEnt);
+    if (inpuNames !== "" && inpuEmail !== "" && inpuMdp !== "" && inpuEnt !== "") {
+      try {
+        const requestData = {
+          username: inpuNames,
+          mdp: inpuMdp,
+          entreprise: inpuEnt,
+          // Ajoutez d'autres données selon les besoins
+        };
+        
+        const response = await axios.post('http://10.0.2.2:5000/api/dataInscr', requestData);
+
+        if(!response.data.error){
+          navigation.navigate("Connection");
+        }
+        else{
+          showAlert();
+        }
+
+        
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des données', error);
+      }
+    } else {
+      console.log(inpuNames,inpuEmail,inpuMdp,inpuEnt);
+      showAlert();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,33 +64,37 @@ const Inscription = () => {
       <Text style={styles.text}>Inscription</Text>
 
       <View style={styles.container2}>
-
         <InputName
-          value={inputValue}
-          onChangeText={(text) => setInputValue(text)}
+          value={inpuNames}
+          onChangeText={(text) => setInputName(text)}
+          
         />
-        <InputMail/>
-       
+        <InputMail
+          value={inpuEmail}
+          onChangeText={(text) => setInputEmail(text)}
+        />
 
         <InputMdp
-          
-            value={inputValue}
-            onChangeText={(text) => setInputValue(text)}
-          />
+          value={inpuMdp}
+          onChangeText={(text) => setInputMdp(text)}
+          placeholder="Mot de passe"
+        />
 
-          <InputMdpVal/>
-        
-
-       
+        <InputEnt
+          value={inpuEnt}
+          onChangeText={(text) => setInputEnt(text)}
+        />
 
         <BoutonInsc onPress={handlePressInsc} />
-        </View>
+      </View>
     </View>
   );
 };
 
 
-const InputName = () => {
+
+
+const InputName = ({ value, onChangeText }) => {
   return(
     <Input
     containerStyle={{}}
@@ -69,6 +110,8 @@ const InputName = () => {
     leftIconContainerStyle={{}}
     placeholder="Entrer un nom utilisateur"
     placeholderTextColor="grey"
+    onChangeText={onChangeText}
+      value={value}
   />
   
 
@@ -76,7 +119,7 @@ const InputName = () => {
 };
 
 
-const InputMail = () => {
+const InputMail = ({ value, onChangeText }) => {
     return(
       <Input
       containerStyle={{}}
@@ -92,6 +135,8 @@ const InputMail = () => {
       leftIconContainerStyle={{}}
       placeholder="Entrer votre adresse email"
       placeholderTextColor="grey"
+      onChangeText={onChangeText}
+      value={value}
     />
     
   
@@ -102,7 +147,7 @@ const InputMail = () => {
 
 
 
-const InputMdp = () => {
+const InputMdp = ({ value, onChangeText }) => {
   return(
     <Input
     containerStyle={{}}
@@ -118,11 +163,13 @@ const InputMdp = () => {
     leftIconContainerStyle={{}}
     placeholder="Créer votre mot de passe"
     placeholderTextColor="grey"
+    onChangeText={onChangeText}
+      value={value}
   />
   );
 };
 
-const InputMdpVal = () => {
+const InputEnt = ({ value, onChangeText }) => {
     return(
       <Input
       containerStyle={{}}
@@ -134,10 +181,12 @@ const InputMdpVal = () => {
       inputStyle={{ fontSize:10, color: 'grey' }}
       labelStyle={{}}
       labelProps={{}}
-      leftIcon={<Icon name="lock-outline" size={20} color={"#ddd"}/>}
+      leftIcon={<Icon name="briefcase" size={20} color={"#ddd"}/>}
       leftIconContainerStyle={{}}
-      placeholder="Validez votre mot de passe"
+      placeholder="Entrez le nom de votre entreprise : "
       placeholderTextColor="grey"
+      onChangeText={onChangeText}
+      value={value}
     />
     );
   };
