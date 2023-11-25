@@ -50,7 +50,7 @@ export default function Multi() {
       }
     }
     else{
-      navigation.navigate("Leaderboard");
+      navigation.navigate(buttonN);
     }
   };
 
