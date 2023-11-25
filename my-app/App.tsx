@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Multi from "./components/multi";
 import Inscription from "./pages/Inscription";
 import Connection from "./pages/Connection";
+import Profile from "./pages/Profile";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./pages/Home";
 import Homes from "./pages/Homes";
