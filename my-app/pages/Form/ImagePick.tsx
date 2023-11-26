@@ -3,7 +3,7 @@ import { Image, View, Alert, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "react-native-paper";
 
-const Geoguesser = () => {
+const ImagePick = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -52,16 +52,18 @@ const Geoguesser = () => {
       <Button
         mode="contained"
         onPress={pickImage}
-        style={styles.button}
+        style={styles.button1}
         icon="image"
+        textColor="white"
       >
         Pick from Gallery
       </Button>
       <Button
         mode="outlined"
         onPress={takePhoto}
-        style={styles.button}
+        style={styles.button2}
         icon="camera"
+        textColor="#0D0F13"
       >
         Take a Photo
       </Button>
@@ -72,14 +74,24 @@ const Geoguesser = () => {
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  button: {
+  button1: {
+    width: '80%',
+    margin: 10,
+    paddingVertical: 8,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    backgroundColor: '#0D0F13',
+  },
+  button2: {
+    width: '80%',
     margin: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 2,
   },
   image: {
     width: 200,
@@ -88,4 +100,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default Geoguesser;
+export default ImagePick;
