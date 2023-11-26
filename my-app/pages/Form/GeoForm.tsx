@@ -42,7 +42,7 @@ const GeoForm = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Office Guesser</Text>
-      <Text style={styles.sectionTitle}>Choisissez un jeu :</Text>
+      <Text style={styles.sectionTitle}>Put the picture :</Text>
       {!selectedImage ? (
         <ImagePick />
       ) : (

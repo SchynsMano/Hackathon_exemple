@@ -28,6 +28,7 @@ import GeoForm from "./Form/GeoForm";
 import FindForm from "./Form/FindForm";
 import QuizzForm from "./Form/QuizzForm";
 import Code from "./Code";
+import Event from "./Event";
 
 const Stack = createStackNavigator();
 
@@ -145,6 +146,7 @@ export default function Nav() {
           <Stack.Screen name="Geo" component={Geoguesser} />
           <Stack.Screen name="Find" component={FindTreasure} />
           <Stack.Screen name="Qui" component={Quizz} />
+          <Stack.Screen name="Event" component={Event} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

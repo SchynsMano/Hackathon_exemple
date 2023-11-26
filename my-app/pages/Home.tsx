@@ -1,8 +1,16 @@
 import Search from "../components/Search";
-import { View, ScrollView, StatusBar, StyleSheet, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import EventCard from "../components/Event";
 import EventHeader from "../components/Top";
 import ContestCard from "../components/Contest";
+import HomeTab from "./HomeTab";
 
 const Carousel = () => {
   return (
@@ -17,16 +25,18 @@ const Carousel = () => {
           <StatusBar hidden />
 
           {/* View a afficher dans le scroll */}
-          <View style={styles.contentContainer}>
-            <EventCard
-              imageUrl="../assets/banner.png"
-              eventDate="10"
-              eventMonth="Nov"
-              title="Title"
-              description="Description"
-              timeAgo="10 min"
-            />
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Event")}>
+            <View style={styles.contentContainer}>
+              <EventCard
+                imageUrl="../assets/banner.png"
+                eventDate="10"
+                eventMonth="Nov"
+                title="Title"
+                description="Description"
+                timeAgo="10 min"
+              />
+            </View>
+          </TouchableOpacity>
         </ScrollView>
 
         {/* Deuxième écran défilable */}
@@ -74,10 +84,16 @@ const Carousel = () => {
 export default function Home() {
   return (
     <View style={styles.view}>
-      <EventHeader dateTime={"DECEMBER 16, 9:10 PM"} profileUri={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
+      <EventHeader
+        dateTime={"DECEMBER 16, 9:10 PM"}
+        profileUri={
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+        }
+      />
 
       <Search />
       <Text style={styles.title}>Subscribe Event's</Text>
+      <HomeTab></HomeTab>
       <Text style={styles.title}>Monthly Contest</Text>
       <ContestCard
         imageUrl={""}
