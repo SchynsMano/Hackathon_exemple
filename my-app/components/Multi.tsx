@@ -22,7 +22,7 @@ export default function Multi() {
     { text: "Button 2", iconName: "search" },
     { text: "Button 3", iconName: "user" },
     { text: "Button 4", iconName: "plus" },
-    { text: "Button 6", iconName: "heart" },
+    { text: "FindTreasure", iconName: "square" },
     { text: "Leaderboard", iconName: "star" },
   ];
 
