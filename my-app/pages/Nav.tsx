@@ -22,7 +22,7 @@ import Multi from "../components/Multi";
 import { BlurView } from "expo-blur";
 import Leaderboard from "./Leaderboard";
 import Geoguesser from "./Games/Geoguesser";
-import GeoForm from "./Form/GeoForm";
+import FindTreasure from "./Games/Findtresure";
 
 const Stack = createStackNavigator();
 
@@ -134,6 +134,7 @@ export default function Nav() {
           <Stack.Screen name="Marker" component={GeoForm} />
           {/* <Stack.Screen name="Create" component={Create} /> */}
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
+          <Stack.Screen name="FindTreasure" component={FindTreasure} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
