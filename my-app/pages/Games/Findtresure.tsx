@@ -1,112 +1,154 @@
-import React, { useState } from 'react';
-import { View, Button, Image, TextInput, ScrollView, StyleSheet, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Button,
+  Alert,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from "react-native-paper";
+import DatePicker from "react-native-date-picker";
+import { SegmentedButtons } from "react-native-paper";
+import ImagePick from "../Form/ImagePick";
+
+const treasureImages = [
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  }
+]
 
 const FindTreasure = () => {
-  const [treasureImages, setTreasureImages] = useState([]);
-
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      multiple: true,
-    });
-
-    if (!result.cancelled) {
-      const newImages = result.assets.map((asset) => ({ uri: asset.uri, description: '' }));
-      const combinedImages = [...treasureImages, ...newImages].slice(0, 6);
-      setTreasureImages(combinedImages);
-    }
-  };
-
-  const handleDescriptionChange = (text) => {
-    const updatedImages = treasureImages.map((item, index) =>
-      index === 5 ? { ...item, description: text } : item
-    );
-    setTreasureImages(updatedImages);
-  };
+  //récupérer image, jeu, date
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150} // Adjust this value as needed
-    >
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.titleText}>Pick your 6 pictures:</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Find Office</Text>
+      <Text style={styles.sectionTitle}>To Find  :</Text>
 
-        <View style={styles.imageGrid}>
-          {treasureImages.map((item, index) => (
-            <View key={index} style={styles.imageContainer}>
-              <Image source={{ uri: item.uri }} style={styles.image} />
-            </View>
-          ))}
-        </View>
+      <Image source={{ uri: "https://picsum.photos/id/237/200/300" }} style={styles.tofind} />
 
-        <View style={styles.buttonContainer}>
-          <Button title="Add Images" onPress={pickImage} color="light-blue" />
-        </View>
+      <Divider style={{ margin: 20, borderColor: "#0D0F13", borderWidth: 1 }} />
 
-        {treasureImages.length === 6 && (
-          <View style={styles.descriptionContainer}>
-            <TextInput
-              placeholder="Enter the description of the quest"
-              style={styles.input}
-              onChangeText={handleDescriptionChange}
-              multiline={true}
-            />
+      {!selectedImage ? (
+        <ImagePick />
+      ) : (
+        <Text style={styles.imageReceived}>Image bien reçue</Text>
+      )}
+
+
+      <Divider style={{ margin: 20, borderColor: "#0D0F13", borderWidth: 1 }} />
+
+      <Text style={styles.sectionTitle}>Tips :</Text>
+
+      <View style={styles.imageGrid}>
+        {treasureImages.map((item, index) => (
+          <View key={index} style={styles.imageContainer}>
+            {
+              index > 0 ?
+                // blur image
+                <Image source={{ uri: item.uri }} blurRadius={10} style={styles.image}/>
+                :
+                <Image source={{ uri: item.uri }} style={styles.image} />
+            }
           </View>
-        )}
-      </ScrollView>
-    </KeyboardAvoidingView>
+        ))}
+      </View>
+      <Text style={styles.title}>4:20</Text>
+    </View>
   );
 };
+export default FindTreasure;
 
 const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingVertical: 20,
-      backgroundColor: '#FDF7E4', 
-    },
-    titleText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 20,
-    },
-    imageGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      marginBottom: 20,
-    },
-    imageContainer: {
-      margin: 5,
-    },
-    image: {
-      width: 120,
-      height: 120,
-      marginBottom: 10,
-    },
-    buttonContainer: {
-      marginBottom: 20,
-    },
-    descriptionContainer: {
-      padding: 20,
-      width: '80%',
-      backgroundColor: '#F0F0F0',
-      alignItems: 'center',
-      borderRadius: 10,
-    },
-    input: {
-      padding: 10,
-      width: '100%',
-    },
-  });
-  
-  export default FindTreasure;
-  
+  tofind: {
+    width: '80%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  imageGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    margin: 5,
+  },
+  image: {
+    width: 120,
+    height: 120,
+    marginBottom: 10,
+    borderRadius: 10,
+  },
+  input: {
+    backgroundColor: "white",
+    borderColor: "#0D0F13",
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: "100%",
+  },
+  datePicker: {
+    width: 200,
+    height: 50,
+    margin: 10,
+    backgroundColor: "black",
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "white", // Swapped to white
+  },
+  title: {
+    marginBottom: 20,
+    color: "#0D0F13", // Swapped to #0D0F13
+    fontSize: 18,
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: 40,
+  },
+  imageReceived: {
+    marginLeft: 150,
+    marginTop: 20,
+    color: "#0D0F13", // Swapped to #0D0F13 for better visibility
+  },
+  datePickerContainer: {
+    marginTop: 20,
+  },
+  sectionTitle: {
+    paddingBottom: 10,
+    color: "#0D0F13", // Swapped to #0D0F13
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10,
+  },
+  submitButton: {
+    marginTop: 30,
+    backgroundColor: "white", // Swapped to white
+    padding: 10,
+    borderRadius: 20,
+  },
+});

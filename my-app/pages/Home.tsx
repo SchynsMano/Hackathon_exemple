@@ -77,6 +77,7 @@ export default function Home() {
       <EventHeader dateTime={"DECEMBER 16, 9:10 PM"} profileUri={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} />
 
       <Search />
+      <Text style={styles.title}>Subscribe Event's</Text>
       <Text style={styles.title}>Monthly Contest</Text>
       <ContestCard
         imageUrl={""}

@@ -24,6 +24,10 @@ import Leaderboard from "./Leaderboard";
 import Geoguesser from "./Games/Geoguesser";
 import FindTreasure from "./Games/Findtresure";
 import Quizz from "./Games/Quizz";
+import GeoForm from "./Form/GeoForm";
+import FindForm from "./Form/FindForm";
+import QuizzForm from "./Form/QuizzForm";
+import Code from "./Code";
 
 const Stack = createStackNavigator();
 
@@ -132,11 +136,15 @@ export default function Nav() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Inscription" component={Inscription} />
           <Stack.Screen name="Connection" component={Connection} />
-          <Stack.Screen name="Marker" component={Geoguesser} />
+          <Stack.Screen name="Marker" component={GeoForm} />
           {/* <Stack.Screen name="Create" component={Create} /> */}
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
-          <Stack.Screen name="FindTreasure" component={FindTreasure} />
-          <Stack.Screen name="Quizz" component={Quizz} />
+          <Stack.Screen name="FindTreasure" component={FindForm} />
+          <Stack.Screen name="Quizz" component={QuizzForm} />
+          <Stack.Screen name="Code" component={Code} />
+          <Stack.Screen name="Geo" component={Geoguesser} />
+          <Stack.Screen name="Find" component={FindTreasure} />
+          <Stack.Screen name="Qui" component={Quizz} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
