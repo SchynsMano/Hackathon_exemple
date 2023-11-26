@@ -1,4 +1,4 @@
-import Search from "../components/Search";
+import Search from "../components/search";
 import { View, ScrollView, StatusBar, StyleSheet, Text } from "react-native";
 import EventCard from "../components/Event";
 import EventHeader from "../components/Top";
