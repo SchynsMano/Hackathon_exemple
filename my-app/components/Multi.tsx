@@ -21,8 +21,8 @@ export default function Multi() {
     { text: "Marker", iconName: "map-marker" },
     { text: "Button 2", iconName: "search" },
     { text: "Button 3", iconName: "user" },
-    { text: "Button 4", iconName: "plus" },
-    { text: "FindTreasure", iconName: "square" },
+    { text: "Quizz", iconName: "question-circle" },
+    { text: "FindTreasure", iconName: "compass" },
     { text: "Leaderboard", iconName: "star" },
   ];
 
