@@ -17,7 +17,7 @@ import { Divider } from "react-native-paper";
 import DatePicker from "react-native-date-picker";
 import { SegmentedButtons } from "react-native-paper";
 
-const GeoForm = () => {
+const QuizzForm = () => {
   //récupérer image, jeu, date
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -36,12 +36,47 @@ const GeoForm = () => {
   };
 
   const handleSubmit = async () => {
-    navigation.navigate("Code", {game: "Office Guesser"});
+    if (
+      selectedButton === null ||
+      selectedImage === null ||
+      selectedDateTime === undefined
+    ) {
+      showAlert();
+    } else {
+      try {
+        let bouton = null;
+        if (selectedButton === 1) {
+          bouton = "carrying";
+        } else if (selectedButton === 2) {
+          bouton = "geoguesseur";
+        } else if (selectedButton === 3) {
+          bouton = "tools finder";
+        }
+        const requestData = {
+          image: selectedImage.uri,
+          jeu: bouton,
+          date: selectedDateTime,
+        };
+        const response = await axios.post(
+          "http://10.0.2.2:5000/api/settingGame",
+          requestData
+        );
+        if (!response.data.error) {
+          console.log("Connexion réussie!");
+
+          navigation.navigate("Home");
+        } else {
+          showAlert();
+        }
+      } catch (error) {
+        showAlert();
+      }
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Office Guesser</Text>
+      <Text style={styles.title}>The Quiz</Text>
       <Text style={styles.sectionTitle}>Put the picture :</Text>
       {!selectedImage ? (
         <ImagePick />
@@ -113,12 +148,12 @@ const GeoForm = () => {
         Sélectionnez une date et une heure :
       </Text>
       <View style={styles.submitButton}>
-        <Button onPress={handleSubmit} title="Soumettre" color="#0D0F13" />
+        <Button onPress={() => navigation.navigate("Code", {game: "The Quizz"})} title="Soumettre" color="#0D0F13" />
       </View>
     </View>
   );
 };
-export default GeoForm;
+export default QuizzForm;
 
 const styles = StyleSheet.create({
   input: {

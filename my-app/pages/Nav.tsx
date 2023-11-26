@@ -23,6 +23,12 @@ import { BlurView } from "expo-blur";
 import Leaderboard from "./Leaderboard";
 import Geoguesser from "./Games/Geoguesser";
 import FindTreasure from "./Games/Findtresure";
+import Quizz from "./Games/Quizz";
+import GeoForm from "./Form/GeoForm";
+import FindForm from "./Form/FindForm";
+import QuizzForm from "./Form/QuizzForm";
+import Code from "./Code";
+import Event from "./Event";
 
 const Stack = createStackNavigator();
 
@@ -136,7 +142,13 @@ export default function Nav() {
           
 
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
-          <Stack.Screen name="FindTreasure" component={FindTreasure} />
+          <Stack.Screen name="FindTreasure" component={FindForm} />
+          <Stack.Screen name="Quizz" component={QuizzForm} />
+          <Stack.Screen name="Code" component={Code} />
+          <Stack.Screen name="Geo" component={Geoguesser} />
+          <Stack.Screen name="Find" component={FindTreasure} />
+          <Stack.Screen name="Qui" component={Quizz} />
+          <Stack.Screen name="Event" component={Event} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

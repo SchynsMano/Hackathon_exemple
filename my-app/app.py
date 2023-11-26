@@ -1,9 +1,19 @@
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+
+
+
 
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'your_secret_key'  # Assurez-vous de définir une clé secrète sécurisée
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yourdatabase.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+
 
 countId = 0
 admin = False
@@ -13,8 +23,23 @@ users = [
 countIdE = 0
 event = [{"id":0,"entreprise":"entreprise","image":"image", "jeu":"jeu", "date":"2023-11-25T12:30:00Z"}]
 
+eventlist = [
+    
+]
+
+@app.route('/api/list', methods=['GET'])
+def addEvent():
+    # get args
+    eventName = request.args.get('event')
+    user = request.args.get('user')
+    eventlist.append({user: eventName})
+    return jsonify(eventlist)
+
+
 @app.route('/api/data', methods=['GET'])
 def get_data():
+    
+    
     data = {'message': 'Hello from Flask!'}
     return jsonify(data)
 

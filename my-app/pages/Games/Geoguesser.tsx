@@ -1,91 +1,152 @@
-import React, { useState, useEffect } from "react";
-import { Image, View, Alert, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Button,
+  Alert,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from "react-native-paper";
+import DatePicker from "react-native-date-picker";
+import { SegmentedButtons } from "react-native-paper";
+import ImagePick from "../Form/ImagePick";
+
+const treasureImages = [
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  },
+  {
+    uri: "https://picsum.photos/id/237/200/300",
+  }
+]
 
 const Geoguesser = () => {
-  const [image, setImage] = useState(null);
-
-  useEffect(() => {
-    requestCameraPermission();
-  }, []);
-
-  const requestCameraPermission = async () => {
-    if (Platform.OS !== "web") {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Sorry, we need camera roll permissions to make this work!"
-        );
-      }
-    }
-  };
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.uri);
-    }
-  };
-
-  const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.uri);
-    }
-  };
+  //récupérer image, jeu, date
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
     <View style={styles.container}>
-      <Button
-        mode="contained"
-        onPress={pickImage}
-        style={styles.button}
-        icon="image"
-      >
-        Pick from Gallery
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={takePhoto}
-        style={styles.button}
-        icon="camera"
-      >
-        Take a Photo
-      </Button>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+      <Text style={styles.title}>Office Guesser</Text>
+      <Text style={styles.sectionTitle}>To Find  :</Text>
+
+      <Image source={{ uri: "https://picsum.photos/id/237/200/300" }} style={styles.tofind} />
+
+      <Divider style={{ margin: 20, borderColor: "#0D0F13", borderWidth: 1 }} />
+
+      {!selectedImage ? (
+        <ImagePick />
+      ) : (
+        <Text style={styles.imageReceived}>Image bien reçue</Text>
+      )}
+
+
+      <Divider style={{ margin: 20, borderColor: "#0D0F13", borderWidth: 1 }} />
+
+      <Text style={styles.sectionTitle}>Compass :</Text>
+
+      {/* Compass image */}
+      <Image source={{ uri: "https://static.thenounproject.com/png/3755382-200.png" }} style={styles.compass} />
+
     </View>
   );
 };
+export default Geoguesser;
 
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    margin: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  image: {
+const styles = StyleSheet.create({
+  compass: {
     width: 200,
     height: 200,
-    marginTop: 15,
+    marginBottom: 10,
+    borderRadius: 10,
+    alignSelf: 'center',
+    // rotation
+    transform: [{ rotate: '56deg' }],
+  },
+  tofind: {
+    width: '80%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  imageGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    margin: 5,
+  },
+  image: {
+    width: 120,
+    height: 120,
+    marginBottom: 10,
+    borderRadius: 10,
+  },
+  input: {
+    backgroundColor: "white",
+    borderColor: "#0D0F13",
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: "100%",
+  },
+  datePicker: {
+    width: 200,
+    height: 50,
+    margin: 10,
+    backgroundColor: "black",
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "white", // Swapped to white
+  },
+  title: {
+    marginBottom: 20,
+    color: "#0D0F13", // Swapped to #0D0F13
+    fontSize: 18,
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: 40,
+  },
+  imageReceived: {
+    marginLeft: 150,
+    marginTop: 20,
+    color: "#0D0F13", // Swapped to #0D0F13 for better visibility
+  },
+  datePickerContainer: {
+    marginTop: 20,
+  },
+  sectionTitle: {
+    paddingBottom: 10,
+    color: "#0D0F13", // Swapped to #0D0F13
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10,
+  },
+  submitButton: {
+    marginTop: 30,
+    backgroundColor: "white", // Swapped to white
+    padding: 10,
+    borderRadius: 20,
   },
 });
-
-export default Geoguesser;

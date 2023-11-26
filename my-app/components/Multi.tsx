@@ -19,10 +19,8 @@ export default function Multi() {
 
   const buttons = [
     { text: "Marker", iconName: "map-marker" },
-    { text: "Button 2", iconName: "search" },
-    { text: "Button 3", iconName: "user" },
-    { text: "Button 4", iconName: "plus" },
-    { text: "FindTreasure", iconName: "square" },
+    { text: "FindTreasure", iconName: "compass" },
+    { text: "Quizz", iconName: "question" },
     { text: "Leaderboard", iconName: "star" },
   ];
 
@@ -55,8 +53,8 @@ export default function Multi() {
 
   // Split buttons into rows of 3
   const buttonRows = [];
-  for (let i = 0; i < buttons.length; i += 3) {
-    buttonRows.push(buttons.slice(i, i + 3));
+  for (let i = 0; i < buttons.length; i += 4) {
+    buttonRows.push(buttons.slice(i, i + 4));
   }
 
   return (
