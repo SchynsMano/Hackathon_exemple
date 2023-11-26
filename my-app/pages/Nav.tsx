@@ -132,13 +132,15 @@ export default function Nav() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
-          initialRouteName="Home"
+          initialRouteName="Connection"
         >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Inscription" component={Inscription} />
           <Stack.Screen name="Connection" component={Connection} />
-          <Stack.Screen name="Marker" component={GeoForm} />
-          {/* <Stack.Screen name="Create" component={Create} /> */}
+          <Stack.Screen name="Marker" component={Geoguesser} />
+          <Stack.Screen name="Create" component={Create} /> 
+          
+
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
           <Stack.Screen name="FindTreasure" component={FindForm} />
           <Stack.Screen name="Quizz" component={QuizzForm} />

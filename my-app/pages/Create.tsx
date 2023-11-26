@@ -1,256 +1,263 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet,Button, Alert } from 'react-native';
+import React, { useState ,useRef  } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Alert, StatusBar, ScrollView ,TextInput} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as ImagePicker from 'expo-image-picker';
-import { color } from '@rneui/base';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
+import EventCard from "../components/Event";
 
 
-const Stack = createStackNavigator();
 
-const Create = () => {
-  //récupérer image, jeu, date
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-  const navigation = useNavigation();
+const MyTextInputComponent = ({textes}) => {
+  const [text, setText] = useState('');
 
-  const showAlert = () => {
-    Alert.alert(
-      'Authentification ratée',
-      'Merci de remplir avec un nom et un mot de passe correct.',
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
-    );
+  const handleInputChange = (inputText) => {
+    setText(inputText);
   };
 
-
-  const handleSubmit= async () => {
-
-    if(selectedButton === null || selectedImage === null || selectedDateTime === undefined){
-      showAlert();
-    }
-    else{try {
-      let bouton = null
-      if(selectedButton === 1){
-        bouton = "carrying"
-
-      }else if(selectedButton === 2){
-
-        bouton = "geoguesseur"
-      }else if(selectedButton === 3){
-        bouton = "tools finder"
-      }
-      const requestData = {
-        image: selectedImage.uri,
-        jeu: bouton,
-        date: selectedDateTime,
-      };
-      const response = await axios.post('http://10.0.2.2:5000/api/settingGame', requestData);
-      if (!response.data.error) {
-        console.log('Connexion réussie!');
-        
-        navigation.navigate("Home");}
-        else{
-          showAlert();
-        }
-    }catch(error){
-      
-      showAlert();
-    }
-  }
-   
-    };
-
-
-
-
-
-
-  const onChangeDate = (event, selectedDate) => {
-    const currentDate = selectedDate || new Date();
-    setShowDatePicker(false);
-    setSelectedDateTime(currentDate);
-  };
-
-  const onChangeTime = (event, selectedTime) => {
-    const currentDate = selectedTime || new Date();
-    setShowTimePicker(false);
-    setSelectedDateTime(currentDate);
-  };
-
-  const showDatePickerModal = () => {
-    setShowDatePicker(true);
-  };
-
-  const showTimePickerModal = () => {
-    setShowTimePicker(true);
-  };
-  const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      console.log('Permission to access media library was denied');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setSelectedImage(result);
-      // Ici, vous pouvez traiter l'image sélectionnée
-    }
-  };
-
-  const handleButtonPress = (buttonId) => {
-    setSelectedButton(buttonId);
-    // Ajoutez ici le code à exécuter lorsque le bouton est sélectionné
+  const handleButtonPress = () => {
+    Alert.alert('Texte saisi :', text);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.greyText}>Choisissez le type d'événement</Text>
-      <View style={styles.containerIn}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedButton === 1 && styles.selectedButton,
-          ]}
-          onPress={() => handleButtonPress(1)}
-        >
-          <Text style={styles.buttonText}>carrying</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedButton === 2 && styles.selectedButton,
-          ]}
-          onPress={() => handleButtonPress(2)}
-        >
-          <Text style={styles.buttonText}>Geoguesseur</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedButton === 3 && styles.selectedButton,
-          ]}
-          onPress={() => handleButtonPress(3)}
-        >
-          <Text style={styles.buttonText}>tools finder</Text>
-        </TouchableOpacity>
-        
-      </View>
-      <Text style={styles.greyText}>Choisissez une image d'évent</Text>
-      {!selectedImage ?(
-        <>
-        
-        <TouchableOpacity onPress={pickImage}>
-          <View style={styles.containerIm}>
-            <Text style={{color:"blue"}}>+Ajoutez image</Text>
-          </View>
-        </TouchableOpacity>
-        </>
-      ):(
-        <Text style={{marginLeft:150,marginTop:20,color:"red"}}>Image bien reçue </Text>
-        
-    )}
-    <View>
-      <Text>Sélectionnez une date et une heure :</Text>
-      <Button onPress={showDatePickerModal} title="Ouvrir le datepicker" />
-      <Button onPress={showTimePickerModal} title="Ouvrir le timepicker" />
-
-      {showDatePicker && (
-        <DateTimePicker
-          testID="datePicker"
-          value={selectedDateTime}
-          mode="date"
-          is24Hour={true}
-          display="default"
-          onChange={onChangeDate}
-        />
-      )}
-
-      {showTimePicker && (
-        <DateTimePicker
-          testID="timePicker"
-          value={selectedDateTime}
-          mode="time"
-          is24Hour={true}
-          display="default"
-          onChange={onChangeTime}
-        />
-      )}
-    </View>
-
-   <Button onPress={handleSubmit} title="Soumettre" />
-      
+    <View style={styles.inputCont}>
+      <TextInput
+        style={styles.input}
+        placeholder={textes}
+        onChangeText={handleInputChange}
+        value={text}
+      />
 
     </View>
   );
 };
 
+const Stack = createStackNavigator();
+let a = "2";
+
+const Create = () => {
+  const scrollViewRef = useRef();
+  const [a, setA] = useState("2");
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const handleScroll = (event) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    console.log('Scrolled to:', offsetX);
+  };
+
+  const handleScrollEnd = (event) => {
+    const contentOffset = event.nativeEvent.contentOffset.x;
+    const pageIndex = Math.round(contentOffset / scrollViewWidth);
+    
+    // Mise à jour de la variable a
+
+    setA("3");
+    if(pageIndex < 10){
+      setA("3");
+    }
+    else if(pageIndex>=10 && pageIndex < 20){
+      setA("4");
+    }
+    else if(pageIndex>=30){
+      setA("5");
+    }
+
+    setPageIndex(pageIndex);
+    console.log('Current Page Index:', pageIndex);
+  };
+
+  const scrollViewWidth = 10;
 
 
+  
+
+  return (
+    <View style={styles.containerBasic}>
+      <Text>Choisissez un jeu :</Text>
+      <View style={styles.containerScroll}>
+        <ScrollView
+          ref={scrollViewRef}
+          onScroll={handleScroll}
+          onMomentumScrollEnd={handleScrollEnd}
+          horizontal
+          pagingEnabled
+          snapToInterval={scrollViewWidth}
+          decelerationRate="fast"
+          showsHorizontalScrollIndicator={false}
+        >
+          {/* Contenu de votre ScrollView */}
+          <ScrollView
+            style={styles.container}
+            bounces={false}
+            contentContainerStyle={styles.scrollViewContainer}
+          >
+            <TouchableOpacity>
+              <View style={styles.contentContainer}>
+                <EventCard
+                  imageUrl="https://picsum.photos/200/300"
+                  eventDate={a}
+                  eventMonth="Nov"
+                  title="Title"
+                  description="Description"
+                  timeAgo="10 min"
+                />
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
+          {/* Ajoutez d'autres écrans ScrollView au besoin */}
+          <ScrollView
+            style={styles.container}
+            bounces={false}
+            contentContainerStyle={styles.scrollViewContainer}
+          >
+            <TouchableOpacity>
+              <View style={styles.contentContainer}>
+                <EventCard
+                  imageUrl="https://picsum.photos/200/300"
+                  eventDate="10"
+                  eventMonth="Nov"
+                  title="Title"
+                  description="Description"
+                  timeAgo="10 min"
+                />
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ScrollView
+            style={styles.container}
+            bounces={false}
+            contentContainerStyle={styles.scrollViewContainer}
+          >
+            <TouchableOpacity>
+              <View style={styles.contentContainer}>
+                <EventCard
+                  imageUrl="https://picsum.photos/200/300"
+                  eventDate="10"
+                  eventMonth="Nov"
+                  title="Title"
+                  description="Description"
+                  timeAgo="10 min"
+                />
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
+          
+        </ScrollView>
+        {pageIndex < 10 ? (
+          // Code for pageIndex less than 10
+          
+              <View style={styles.textInputContainer}>
+                <Text> Jeu : Geoguesseur</Text>
+          <Button mode="contained">
+            Sélectionner un fichier
+          </Button>
+          <MyTextInputComponent textes={"Date de l'évent "} />
+          
+        </View>
+          
+          ) : pageIndex >= 10 && pageIndex < 20 ? (
+            // Code for pageIndex between 10 and 20
+            <View style={styles.textInputContainer}>
+              <Text> Jeu : Quizz</Text>
+              <Button mode="contained">
+                Sélectionner un fichier
+              </Button>
+              <MyTextInputComponent textes={"Date de l'évént"} />
+              
+            </View>
+          ) : pageIndex >= 30 ? (
+            // Code for pageIndex greater than or equal to 30
+                    <View style={styles.textInputContainer}>
+                      <Text> Jeu : Find tresor</Text>
+                <Button mode="contained">
+                  Sélectionner un fichier
+                </Button>
+                <MyTextInputComponent textes={"date de l'évent"} />
+              
+              </View>
+
+
+          ) :   <View style={styles.textInputContainer}>
+            <Text> Jeu : find tresor</Text>
+          <Button mode="contained">
+            Sélectionner un fichier
+          </Button>
+          <MyTextInputComponent textes={"date de l'évent"} />
+          
+        </View>}
+        <View style={styles.textInputContainer3}>
+        <TextInput
+             style={styles.inputDesc}
+              placeholder={"Donnez la description de l'évenement "}
+                
+             />
+        </View>
+
+                </View>
+                
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
+  inputCont: {
+    marginVertical: 10,
+    marginHorizontal: 20,
   },
-  containerIn: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
-  },
-  containerIm: {
-    height: 100,
-    width: 100,
-    marginLeft:150,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-    backgroundColor: 'rgba(180, 180, 180, 0.7)',
-    borderWidth: 1,  // Ajoutez une largeur de bordure
-    borderStyle: 'dashed',  // Utilisez le style en pointillés
-    borderColor: 'rgba(0, 0, 0, 0.5)',  // Couleur de la bordure
-  },
-  button: {
-    backgroundColor: 'rgb(230, 220, 320)',
-    padding: 10,
-    borderRadius: 20,
-  },
-  selectedButton: {
-    backgroundColor: 'rgb(200, 170, 280)',
-  },
-  buttonText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  imagePickerButton: {
-    marginTop: 20,
-    backgroundColor: 'rgb(150, 200, 250)',
-    padding: 10,
-    borderRadius: 20,
-    width: 150, // Ajustez la largeur selon vos besoins
+  input: {
     height: 40,
-
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    textAlign: 'center',
   },
-  greyText: {
-    marginTop:30,
-    color: 'rgba(128, 128, 128, 0.7)',
-    fontSize: 16,
-    fontWeight: 'bold',
+
+  inputDesc:{
+    height: 100,
+    width:300,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    textAlign: 'center',
+  },
+  
+  
+  containerBasic: {
+    alignItems: "center",
+    marginTop: 150,
+    flex: 1,
+  },
+  containerScroll: {
+    backgroundColor: "transparent",
+  },
+  mainScrollView: {
+    flexGrow: 0,
+  },
+  scrollViewContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  contentContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  textInputContainer: {
+    position: 'absolute',
+    top: 250, // Ajustez la valeur de top selon l'emplacement souhaité
+    left: 100, // Ajustez la valeur de left selon l'emplacement souhaité
+  },
+  textInputContainer2: {
+    position: 'absolute',
+    top: 360, // Ajustez la valeur de top selon l'emplacement souhaité
+    left: 150, // Ajustez la valeur de left selon l'emplacement souhaité
+  },
+  textInputContainer3: {
+    position: 'absolute',
+    top: 500, // Ajustez la valeur de top selon l'emplacement souhaité
+    left: 60, // Ajustez la valeur de left selon l'emplacement souhaité
   },
 });
 
