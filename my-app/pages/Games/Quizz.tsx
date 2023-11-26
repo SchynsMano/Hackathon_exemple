@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
 const questions = [
   {
@@ -108,27 +108,30 @@ const questions = [
   
     return (
       <View style={styles.container}>
-        {showScore ? (
-          <View style={styles.scoreContainer}>
-            <Text style={styles.scoreText}>Your Score: {score} / 5</Text>
-            <Button title="Restart Quiz" onPress={resetQuiz} />
-          </View>
-        ) : (
-          <View style={styles.quizContainer}>
-            <Text style={styles.questionText}>
-              {shuffledQuestions[currentQuestion]?.question}
-            </Text>
-            {shuffledQuestions[currentQuestion]?.choices.map((choice, index) => (
-              <Button
-                key={index}
-                title={choice}
-                onPress={() => handleAnswerButtonClick(choice)}
-                style={styles.answerButton}
-              />
-            ))}
-          </View>
-        )}
-      </View>
+      {showScore ? (
+        <View style={styles.scoreContainer}>
+          <Text style={styles.scoreText}>Your Score: {score} / 5</Text>
+          <TouchableOpacity style={styles.button} onPress={resetQuiz}>
+            <Text style={styles.buttonText}>Restart Quiz</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.quizContainer}>
+          <Text style={styles.questionText}>
+            {shuffledQuestions[currentQuestion]?.question}
+          </Text>
+          {shuffledQuestions[currentQuestion]?.choices.map((choice, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.choiceButton}
+              onPress={() => handleAnswerButtonClick(choice)}
+            >
+              <Text style={styles.choiceButtonText}>{choice}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+    </View>
     );
   };
   
@@ -137,18 +140,21 @@ const questions = [
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#FDF7E4',
+      backgroundColor: '#F5F5F5', // Light gray background
     },
     scoreContainer: {
       justifyContent: 'center',
       alignItems: 'center',
+      padding: 20,
     },
     scoreText: {
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
+      color: '#333', // Dark text for contrast
     },
     quizContainer: {
+      width: '80%', // Set width for quiz container
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -156,10 +162,29 @@ const questions = [
       fontSize: 20,
       marginBottom: 20,
       textAlign: 'center',
+      color: '#333',
     },
-    answerButton: {
-      marginVertical: 5,
-      width: 200,
+    choiceButton: {
+      backgroundColor: '#007AFF', // Primary color for choice buttons
+      padding: 15,
+      borderRadius: 5,
+      marginVertical: 10,
+      width: '100%', // Full width within container
+      alignItems: 'center',
+    },
+    choiceButtonText: {
+      color: 'white',
+      fontSize: 16,
+    },
+    button: {
+      backgroundColor: '#28A745', // Green color for restart button
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 18,
     },
   });
   

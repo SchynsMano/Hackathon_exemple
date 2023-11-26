@@ -77,7 +77,7 @@ const FindForm = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Find Office</Text>
-      <Text style={styles.sectionTitle}>Choisissez un jeu :</Text>
+      <Text style={styles.sectionTitle}>Put the picture :</Text>
       {!selectedImage ? (
         <ImagePick />
       ) : (
